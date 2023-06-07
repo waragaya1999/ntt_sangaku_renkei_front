@@ -7,7 +7,7 @@ type Props = {
 export default function UpperPost({bgImage}: Props) {
     const upperPostsH = "calc(100vh * 0.6)"
     return (
-        <div className={"rounded-2xl overflow-hidden"} style={{width: "100%", height: upperPostsH}}>
+        <div className={"rounded-2xl overflow-hidden mx-[1%]"} style={{width: "100%", height: upperPostsH}}>
             <div className={"w-[100%] h-[70%] relative"}>
                 <Image src="/images/demo.jpg" alt="demo" fill style={{objectFit: "cover"}}/>
             </div>
