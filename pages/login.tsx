@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { NextPage } from "next";
+import { test } from "node:test";
+import { useGetLoginId } from "@/components/hooks/useGetLoginId";
+import { log } from "node:console";
 
 const Login: NextPage = () => {
   // sessionには、以下のような値が入っています。
@@ -13,6 +16,16 @@ const Login: NextPage = () => {
   //     "expires":"2023-04-01T00:29:51.016Z"
   // }
   const { data: session } = useSession();
+  const { userId, getLoginId, test } = useGetLoginId();
+
+  // グーグルログイン後、ユーザIDを取得
+  useEffect(() => {
+    if (session?.user?.email) {
+      getLoginId(session?.user?.email);
+      const data = test();
+      console.log(data);
+    }
+  }, [session]);
 
   return (
     <>
@@ -21,6 +34,7 @@ const Login: NextPage = () => {
         session && (
           <div>
             <h1>ログインしています</h1>
+            <p>{userId}</p>
             <p>{"{"}</p>
             <p className="indent-4">user: {"{"}</p>
             <p className="indent-8">user.name: {session.user?.name}</p>
