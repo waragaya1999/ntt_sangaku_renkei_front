@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { NextPage } from "next";
-import { test } from "node:test";
-import { useGetLoginId } from "@/components/hooks/useGetLoginId";
-import { log } from "node:console";
+import useAuth from "@/components/hooks/useAuth";
 
 const Login: NextPage = () => {
   // sessionには、以下のような値が入っています。
@@ -16,16 +14,18 @@ const Login: NextPage = () => {
   //     "expires":"2023-04-01T00:29:51.016Z"
   // }
   const { data: session } = useSession();
-  const { userId, getLoginId, test } = useGetLoginId();
 
   // グーグルログイン後、ユーザIDを取得
+  const { login, logout, user } = useAuth();
+
   useEffect(() => {
-    if (session?.user?.email) {
-      getLoginId(session?.user?.email);
-      const data = test();
-      console.log(data);
-    }
+    login(session?.user);
   }, [session]);
+
+  const logoutHandle = () => {
+    signOut();
+    logout();
+  };
 
   return (
     <>
@@ -34,12 +34,12 @@ const Login: NextPage = () => {
         session && (
           <div>
             <h1>ログインしています</h1>
-            <p>{userId}</p>
+            <p>userId = {user.userId}</p>
             <p>{"{"}</p>
             <p className="indent-4">user: {"{"}</p>
-            <p className="indent-8">user.name: {session.user?.name}</p>
-            <p className="indent-8">user.email: {session.user?.email}</p>
-            <p className="indent-8">user.image: {session.user?.image}</p>
+            <p className="indent-8">user.name: {user.name}</p>
+            <p className="indent-8">user.email: {user.email}</p>
+            <p className="indent-8">user.image: {user.image}</p>
             <img
               src={session.user?.image || ""}
               alt="sessionUserImage"
@@ -48,19 +48,7 @@ const Login: NextPage = () => {
             <p className="indent-4">{"}"}</p>
             <p className="indent-4">expires: {session.expires}</p>
             <p>{"}"}</p>
-            <button onClick={() => signOut()}>ログアウト</button>
-
-            <p>
-              理由はよくわかんないけど、pagesの中にapiを入れとく必要があるみたい。
-            </p>
-            <p>
-              _app.tsxは全てのページコンポーネントの初期化？初期値？的なことに使われるっぽい。ここを適当な名前に変えると動かなくなる。
-            </p>
-            <p>
-              あと yarn dev
-              してからtsconfig.jsonが赤くなるようになっちゃったっていう報告
-            </p>
-            <p>あとレイアウトのいい感じの付け方わからんから教えてクレメンス</p>
+            <button onClick={() => logoutHandle()}>ログアウト</button>
           </div>
         )
       }
@@ -70,6 +58,7 @@ const Login: NextPage = () => {
         !session && (
           <div>
             <p>ログインしていません</p>
+            <p>userId = {user.userId}</p>
             <button onClick={() => signIn()}>ログイン</button>
           </div>
         )
