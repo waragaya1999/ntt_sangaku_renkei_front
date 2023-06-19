@@ -57,22 +57,4 @@ const useAuth = create<userState>((set, get) => ({
   },
 }));
 
-// const getLoginId = async (user: any): Promise<any> => {
-//   try {
-//     const sendData = {
-//       userName: user.name,
-//       email: user.email,
-//       imgPath: user.image,
-//     };
-
-//     const response = await axios.post(url + "/user", sendData, {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-
-//     setUserId(response.data.userId);
-//   } catch {}
-// };
-
 export default useAuth;
