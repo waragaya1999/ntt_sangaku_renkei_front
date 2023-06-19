@@ -1,11 +1,27 @@
 import usePostArticle from "@/components/hooks/usePostArticle";
 import "../styles/globals.css";
 import Header from "@/components/header";
-import UpperPost from "@/components/upperPost";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import useAuth from "@/components/hooks/useAuth";
 
 export default function Test() {
+  // グーグルログイン後、ユーザIDを取得
+  const { data: session } = useSession();
+  const { login, user } = useAuth();
+
+  useEffect(() => {
+    login(session?.user);
+  }, [session]);
+
+  const {
+    article,
+    imagePathOnChange,
+    bodyOnChange,
+    categoriesOnChange,
+    postArticle,
+    resetArticle,
+  } = usePostArticle();
   return (
     <>
       <Header />
@@ -13,6 +29,10 @@ export default function Test() {
         <div className="w-full max-w-xs">
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div className="mb-4">
+              <p>user.userId: {user.userId}</p>
+              <p>article.imagePath: {article.imagePath}</p>
+              <p>article.body: {article.body}</p>
+              <p>article.categories: {article.categories}</p>
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 imagePath
               </label>
@@ -21,6 +41,8 @@ export default function Test() {
                 id="username"
                 type="text"
                 placeholder="Username"
+                value={article.imagePath}
+                onChange={(event) => imagePathOnChange(event)}
               />
             </div>
             <div className="mb-4">
@@ -32,6 +54,8 @@ export default function Test() {
                 id="username"
                 type="text"
                 placeholder="Username"
+                value={article.body}
+                onChange={(event) => bodyOnChange(event)}
               />
             </div>
             <div className="mb-4">
@@ -43,6 +67,8 @@ export default function Test() {
                 id="username"
                 type="text"
                 placeholder="Username"
+                value={article.categories}
+                onChange={(event) => categoriesOnChange(event)}
               />
             </div>
             <div className="mb-6">
@@ -54,12 +80,14 @@ export default function Test() {
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
+                onClick={() => postArticle(user.userId)}
               >
                 投稿
               </button>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
+                onClick={() => resetArticle()}
               >
                 リセット
               </button>
