@@ -9,7 +9,7 @@ export default function CatList({ mx }: Props) {
             <div className={"w-[80%] flex items-center"}>
                 <div
                     className={
-                        "w-[7vw] h-[7vw] bg-[url(/images/demo.jpg)] bg-center bg-cover bg-no-repeat rounded mr-[5%]"
+                        "w-[7vw] h-[7vw] max-w-[40px] max-h-[40px] bg-[url(/images/demo.jpg)] bg-center bg-cover bg-no-repeat rounded mr-[5%]"
                     }
                 ></div>
                 <p className={"text-[13px] leading-4"}>桜うんぬん</p>

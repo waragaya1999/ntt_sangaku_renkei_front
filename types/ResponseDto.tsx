@@ -1,7 +1,7 @@
 export type ResponseDto = {
     post_id: number
     image_path: string
-    post_body: string
+    content: string
     like_count: number
     user: {
         user_id: number

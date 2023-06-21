@@ -12,6 +12,10 @@
     height: 100%;
 }
 
+html{
+    background-color: black;
+}
+
 body {
     color: rgb(var(--foreground-rgb));
     background: linear-gradient(
@@ -20,6 +24,7 @@ body {
             rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+    max-width: 600px;
     height: 100vh;
 }
 

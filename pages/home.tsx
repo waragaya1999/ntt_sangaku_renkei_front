@@ -1,4 +1,3 @@
-import "../styles/globals.css"
 import Header from "@/components/Header"
 import UpperPost from "@/components/UpperPost"
 import { useKeenSlider } from "keen-slider/react"
@@ -13,7 +12,7 @@ export default function Home() {
     const [doc, setDoc] = useState<ResponseDto>({
         post_id: 0,
         image_path: "",
-        post_body: "",
+        content: "",
         like_count: 0,
         user: {
             user_id: 0,
@@ -60,35 +59,35 @@ export default function Home() {
                     <UpperPost
                         num={1}
                         image_path={doc?.image_path}
-                        post_body={doc?.post_body}
+                        post_body={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
                     <UpperPost
                         num={2}
                         image_path={doc?.image_path}
-                        post_body={doc?.post_body}
+                        post_body={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
                     <UpperPost
                         num={3}
                         image_path={doc?.image_path}
-                        post_body={doc?.post_body}
+                        post_body={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
                     <UpperPost
                         num={4}
                         image_path={doc?.image_path}
-                        post_body={doc?.post_body}
+                        post_body={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
                     <UpperPost
                         num={5}
                         image_path={doc?.image_path}
-                        post_body={doc?.post_body}
+                        post_body={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
