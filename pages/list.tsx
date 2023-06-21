@@ -27,7 +27,7 @@ export default function List() {
                         <div key={index}>
                             <ListComponent
                                 image_path={doc?.image_path}
-                                post_body={doc?.content}
+                                content={doc?.content}
                                 like_count={doc?.like_count}
                                 user={doc?.user}
                             />

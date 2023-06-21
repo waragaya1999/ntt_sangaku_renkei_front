@@ -59,35 +59,35 @@ export default function Home() {
                     <UpperPost
                         num={1}
                         image_path={doc?.image_path}
-                        post_body={doc?.content}
+                        content={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
                     <UpperPost
                         num={2}
                         image_path={doc?.image_path}
-                        post_body={doc?.content}
+                        content={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
                     <UpperPost
                         num={3}
                         image_path={doc?.image_path}
-                        post_body={doc?.content}
+                        content={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
                     <UpperPost
                         num={4}
                         image_path={doc?.image_path}
-                        post_body={doc?.content}
+                        content={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
                     <UpperPost
                         num={5}
                         image_path={doc?.image_path}
-                        post_body={doc?.content}
+                        content={doc?.content}
                         like_count={doc?.like_count}
                         user={doc?.user}
                     />
