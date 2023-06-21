@@ -20,7 +20,7 @@ const resetArticle: articleDto = {
 
 type postArticleState = {
   article: articleDto;
-  getImagePath: (image: any) => any;
+  getImagePath: (event: any) => any;
   imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
   bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
   categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -31,12 +31,13 @@ type postArticleState = {
 const usePostArticle = create<postArticleState>((set, get) => ({
   article: resetArticle,
 
-  getImagePath: async (image: any) => {
+  getImagePath: async (event: any) => {
+    const image = event.target?.files;
     try {
       //Todo URL確認
-      const response = await axios.post(url + "", image, {
+      const response = await axios.post(url + "/fileUp", image, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -44,7 +45,7 @@ const usePostArticle = create<postArticleState>((set, get) => ({
       set((state) => ({
         article: {
           ...state.article,
-          imagePath: response.data.imagePath || "error",
+          imagePath: response.data.userId,
         },
       }));
     } catch (error) {
@@ -89,7 +90,7 @@ const usePostArticle = create<postArticleState>((set, get) => ({
     }));
     try {
       //Todo URL確認
-      await axios.post(url + "", get().article, {
+      await axios.post(url + "/post", get().article, {
         headers: {
           "Content-Type": "application/json",
         },

@@ -2,7 +2,7 @@ import usePostArticle from "@/components/hooks/usePostArticle";
 import "../styles/globals.css";
 import Header from "@/components/header";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useAuth from "@/components/hooks/useAuth";
 
 export default function Test() {
@@ -16,6 +16,7 @@ export default function Test() {
 
   const {
     article,
+    getImagePath,
     imagePathOnChange,
     bodyOnChange,
     categoriesOnChange,
@@ -27,6 +28,12 @@ export default function Test() {
       <Header />
       <main>
         <div className="w-full max-w-xs">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => getImagePath(e)}
+          />
+
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div className="mb-4">
               <p>user.userId: {user.userId}</p>
@@ -44,6 +51,15 @@ export default function Test() {
                 value={article.imagePath}
                 onChange={(event) => imagePathOnChange(event)}
               />
+              {article.imagePath == "" ? (
+                <div className="mb-6">
+                  <p className="text-red-500 text-xs italic">
+                    Please choose a password.
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
