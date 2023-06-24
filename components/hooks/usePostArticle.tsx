@@ -1,110 +1,117 @@
-import axios from "axios";
-import { ChangeEvent, useState } from "react";
-import { create } from "zustand";
+import axios from "axios"
+import { ChangeEvent, useState } from "react"
+import { create } from "zustand"
 
-const url = process.env.NEXT_PUBLIC_MOCK_URL || "";
+const url = process.env.NEXT_PUBLIC_MOCK_URL || ""
 
 type articleDto = {
-  userId: number;
-  imagePath: string;
-  body: string;
-  categories: string;
-};
+    userId: number
+    imagePath: string
+    body: string
+    categories: string
+}
 
 const resetArticle: articleDto = {
-  userId: 0,
-  imagePath: "",
-  body: "",
-  categories: "",
-};
+    userId: 0,
+    imagePath: "",
+    body: "",
+    categories: "",
+}
 
 type postArticleState = {
-  article: articleDto;
-  getImagePath: (event: any) => any;
-  imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  postArticle: (userId: number) => void;
-  resetArticle: () => void;
-};
+    article: articleDto
+    getImagePath: (event: ChangeEvent<HTMLInputElement>) => void
+    imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => void
+    bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => void
+    categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => void
+    postArticle: (userId: number) => void
+    resetArticle: () => void
+}
 
 const usePostArticle = create<postArticleState>((set, get) => ({
-  article: resetArticle,
+    article: resetArticle,
 
-  getImagePath: async (event: any) => {
-    const image = event.target?.files;
-    try {
-      //Todo URL確認
-      const response = await axios.post(url + "/fileUp", image, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    getImagePath: async (event: ChangeEvent<HTMLInputElement>) => {
+        console.log(event)
 
-      // Todo ここを確認
-      set((state) => ({
-        article: {
-          ...state.article,
-          imagePath: response.data.userId,
-        },
-      }));
-    } catch (error) {
-      console.log(error);
-    }
-  },
+        const image = event.target?.files?.[0]
+        console.log(image)
 
-  imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => {
-    set((state) => ({
-      article: {
-        ...state.article,
-        imagePath: event.target.value,
-      },
-    }));
-  },
+        try {
+            //Todo URL確認
+            console.log(image)
 
-  bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => {
-    set((state) => ({
-      article: {
-        ...state.article,
-        body: event.target.value,
-      },
-    }));
-  },
+            const response = await axios.post(url + "/fileup", image, {
+                headers: {
+                    accept: "application/json",
+                    "Content-Type": "multipart/form-data",
+                },
+            })
 
-  // Todo 大変そうだからとりあえずStringでやった
-  categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => {
-    set((state) => ({
-      article: {
-        ...state.article,
-        categories: event.target.value,
-      },
-    }));
-  },
+            // Todo ここを確認
+            set((state) => ({
+                article: {
+                    ...state.article,
+                    imagePath: response.data.userId,
+                },
+            }))
+        } catch (error) {
+            console.log(error)
+        }
+    },
 
-  postArticle: async (userId: number) => {
-    set((state) => ({
-      article: {
-        ...state.article,
-        userId: userId,
-      },
-    }));
-    try {
-      //Todo URL確認
-      await axios.post(url + "/post", get().article, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  },
+    imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => {
+        set((state) => ({
+            article: {
+                ...state.article,
+                imagePath: event.target.value,
+            },
+        }))
+    },
 
-  resetArticle: () => {
-    set({
-      article: resetArticle,
-    });
-  },
-}));
+    bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => {
+        set((state) => ({
+            article: {
+                ...state.article,
+                body: event.target.value,
+            },
+        }))
+    },
 
-export default usePostArticle;
+    // Todo 大変そうだからとりあえずStringでやった
+    categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => {
+        set((state) => ({
+            article: {
+                ...state.article,
+                categories: event.target.value,
+            },
+        }))
+    },
+
+    postArticle: async (userId: number) => {
+        set((state) => ({
+            article: {
+                ...state.article,
+                userId: userId,
+            },
+        }))
+        try {
+            //Todo URL確認
+            await axios.post(url + "/post", get().article, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    resetArticle: () => {
+        set({
+            article: resetArticle,
+        })
+    },
+}))
+
+export default usePostArticle

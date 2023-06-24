@@ -1,5 +1,4 @@
 import usePostArticle from "@/components/hooks/usePostArticle"
-import "../styles/globals.css"
 import Header from "@/components/Header"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
@@ -25,7 +24,6 @@ export default function Test() {
     } = usePostArticle()
     return (
         <>
-            <Header location={"投稿"} />
             <main>
                 <div className="w-full max-w-xs">
                     <input
@@ -33,6 +31,15 @@ export default function Test() {
                         accept="image/*"
                         onChange={(e) => getImagePath(e)}
                     />
+
+                    <form>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => getImagePath(e)}
+                        />
+                        <button>画像UPLOAD</button>
+                    </form>
 
                     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                         <div className="mb-4">
@@ -87,6 +94,7 @@ export default function Test() {
                                 onChange={(event) => categoriesOnChange(event)}
                             />
                         </div>
+
                         <div className="mb-6">
                             <p className="text-red-500 text-xs italic">
                                 Please choose a password.
