@@ -1,4 +1,5 @@
 import axios from "axios"
+import { log } from "console"
 import { ChangeEvent, useState } from "react"
 import { create } from "zustand"
 
@@ -20,7 +21,10 @@ const resetArticle: articleDto = {
 
 type postArticleState = {
     article: articleDto
-    getImagePath: (event: ChangeEvent<HTMLInputElement>) => void
+    image: any
+    inputImage: (event: ChangeEvent<HTMLInputElement>) => void
+    getImagePath: () => void
+    // getImagePath: (event: ChangeEvent<HTMLInputElement>) => void
     imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => void
     bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => void
     categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -30,23 +34,36 @@ type postArticleState = {
 
 const usePostArticle = create<postArticleState>((set, get) => ({
     article: resetArticle,
-
-    getImagePath: async (event: ChangeEvent<HTMLInputElement>) => {
+    image: "",
+    inputImage: (event: ChangeEvent<HTMLInputElement>) => {
+        set(() => ({
+            image: event,
+        }))
+        console.log("event")
         console.log(event)
+    },
 
-        const image = event.target?.files?.[0]
+    getImagePath: async () => {
+        // getImagePath: async (event: ChangeEvent<HTMLInputElement>) => {
+        // console.log(event)
+        // const image = event.target?.files?.[0]
+        const image = get().image
         console.log(image)
 
         try {
             //Todo URL確認
             console.log(image)
+            const formData = new FormData()
+            formData.append("file", image)
 
-            const response = await axios.post(url + "/fileup", image, {
+            const response = await axios.post(url + "/fileup", formData, {
                 headers: {
                     accept: "application/json",
                     "Content-Type": "multipart/form-data",
                 },
             })
+
+            console.log("getImage run")
 
             // Todo ここを確認
             set((state) => ({

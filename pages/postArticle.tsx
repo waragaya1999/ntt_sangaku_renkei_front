@@ -21,24 +21,21 @@ export default function Test() {
         categoriesOnChange,
         postArticle,
         resetArticle,
+        inputImage,
     } = usePostArticle()
     return (
         <>
             <main>
                 <div className="w-full max-w-xs">
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => getImagePath(e)}
-                    />
-
                     <form>
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => getImagePath(e)}
+                            onChange={(e) => inputImage(e)}
                         />
-                        <button>画像UPLOAD</button>
+                        <button type="button" onClick={() => getImagePath()}>
+                            画像UPLOAD
+                        </button>
                     </form>
 
                     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
