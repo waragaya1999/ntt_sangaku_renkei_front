@@ -44,25 +44,21 @@ const usePostArticle = create<postArticleState>((set, get) => ({
     },
 
     getImagePath: async () => {
-        // getImagePath: async (event: ChangeEvent<HTMLInputElement>) => {
-        // console.log(event)
-        // const image = event.target?.files?.[0]
-        const image = get().image
+        const image = get().image;
         console.log(image)
 
         try {
             //Todo URL確認
-            console.log(image)
-            const formData = new FormData()
-            formData.append("file", image)
-
+            const formData = new FormData();
+            formData.append("file", image.target.files[0]);
             const response = await axios.post(url + "/fileup", formData, {
                 headers: {
                     accept: "application/json",
                     "Content-Type": "multipart/form-data",
                 },
             })
-
+            console.log(response);
+            console.log(formData);
             console.log("getImage run")
 
             // Todo ここを確認
