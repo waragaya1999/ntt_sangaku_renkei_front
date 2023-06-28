@@ -21,7 +21,6 @@ export default function Test() {
         categoriesOnChange,
         postArticle,
         resetArticle,
-        inputImage,
     } = usePostArticle()
     return (
         <>
@@ -31,12 +30,11 @@ export default function Test() {
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => inputImage(e)}
+                            onChange={(e) => getImagePath(e)}
                         />
-                        <button type="button" onClick={() => getImagePath()}>
-                            画像UPLOAD
-                        </button>
                     </form>
+                    <p>imagePath: {article.imagePath}</p>
+                    <img src={article.imagePath} />
 
                     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                         <div className="mb-4">

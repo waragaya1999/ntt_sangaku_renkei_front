@@ -21,10 +21,7 @@ const resetArticle: articleDto = {
 
 type postArticleState = {
     article: articleDto
-    image: any
-    inputImage: (event: ChangeEvent<HTMLInputElement>) => void
-    getImagePath: () => void
-    // getImagePath: (event: ChangeEvent<HTMLInputElement>) => void
+    getImagePath: (event: ChangeEvent<HTMLInputElement>) => void
     imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => void
     bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => void
     categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -34,42 +31,30 @@ type postArticleState = {
 
 const usePostArticle = create<postArticleState>((set, get) => ({
     article: resetArticle,
-    image: "",
-    inputImage: (event: ChangeEvent<HTMLInputElement>) => {
-        set(() => ({
-            image: event,
-        }))
-        console.log("event")
-        console.log(event)
-    },
 
-    getImagePath: async () => {
-        const image = get().image;
-        console.log(image)
+    getImagePath: async (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files !== null) {
+            try {
+                //Todo URL確認
+                const formData = new FormData()
+                formData.append("file", event.target.files[0])
+                const response = await axios.post(url + "/fileup", formData, {
+                    headers: {
+                        accept: "application/json",
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
 
-        try {
-            //Todo URL確認
-            const formData = new FormData();
-            formData.append("file", image.target.files[0]);
-            const response = await axios.post(url + "/fileup", formData, {
-                headers: {
-                    accept: "application/json",
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            console.log(response);
-            console.log(formData);
-            console.log("getImage run")
-
-            // Todo ここを確認
-            set((state) => ({
-                article: {
-                    ...state.article,
-                    imagePath: response.data.userId,
-                },
-            }))
-        } catch (error) {
-            console.log(error)
+                // Todo ここを確認
+                set((state) => ({
+                    article: {
+                        ...state.article,
+                        imagePath: response.data.imgPath,
+                    },
+                }))
+            } catch (error) {
+                console.log(error)
+            }
         }
     },
 
