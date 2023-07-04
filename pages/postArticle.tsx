@@ -1,5 +1,4 @@
 import usePostArticle from "@/components/hooks/usePostArticle"
-import "../styles/globals.css"
 import Header from "@/components/Header"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"

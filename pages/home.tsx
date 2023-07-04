@@ -37,8 +37,9 @@ export default function Home() {
         },
     })
     useLayoutEffect(() => {
+        //いいね上位5件くらいください
         axios
-            .get("http://localhost:8003/post/1")
+            .get("")
             .then((res) => {
                 setDoc(res.data)
                 console.log(res.data)
