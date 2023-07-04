@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { signIn, useSession } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react"
 type Props = {
     location: string
 }
@@ -26,6 +26,7 @@ export default function Header({ location }: Props) {
                             alt="logo"
                             width={40}
                             height={40}
+                            onClick={() => signOut()}
                         />
                     ) : (
                         <Image
