@@ -12,6 +12,12 @@ type articleDto = {
     categories: string
 }
 
+type categoryDto = {
+    category_id: number
+    category_name: string
+    category_image_path: string
+}
+
 const resetArticle: articleDto = {
     userId: 0,
     imagePath: "",
@@ -24,6 +30,8 @@ type postArticleState = {
     getImagePath: (event: ChangeEvent<HTMLInputElement>) => void
     imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => void
     bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => void
+    categories: categoryDto[]
+    getCategories: () => void
     categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => void
     postArticle: (userId: number) => void
     resetArticle: () => void
@@ -78,7 +86,28 @@ const usePostArticle = create<postArticleState>((set, get) => ({
 
     // Todo 大変そうだからとりあえずStringでやった
     // ポコポコポコスタイル
+    categories: [],
+    getCategories: async () => {
+        console.log("getCategories run")
 
+        try {
+            const response: categoryDto[] = await axios.get(
+                url + "/categories",
+                {
+                    headers: {
+                        accept: "application/json",
+                    },
+                },
+            )
+            set({
+                categories: response,
+            })
+            console.log("response: " + response[0].category_id)
+        } catch (e) {
+            console.log("getCategory error")
+            console.log(e)
+        }
+    },
     categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => {
         set((state) => ({
             article: {

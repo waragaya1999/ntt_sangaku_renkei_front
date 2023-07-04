@@ -9,19 +9,23 @@ export default function Test() {
     const { data: session } = useSession()
     const { login, user } = useAuth()
 
-    useEffect(() => {
-        login(session?.user)
-    }, [session])
-
     const {
         article,
         getImagePath,
         imagePathOnChange,
         bodyOnChange,
+        categories,
+        getCategories,
         categoriesOnChange,
         postArticle,
         resetArticle,
     } = usePostArticle()
+
+    useEffect(() => {
+        login(session?.user)
+        getCategories()
+    }, [session])
+
     return (
         <>
             <main>
@@ -80,6 +84,7 @@ export default function Test() {
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 category
                             </label>
+
                             <input
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="username"
