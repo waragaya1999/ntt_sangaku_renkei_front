@@ -77,6 +77,8 @@ const usePostArticle = create<postArticleState>((set, get) => ({
     },
 
     // Todo 大変そうだからとりあえずStringでやった
+    // ポコポコポコスタイル
+
     categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => {
         set((state) => ({
             article: {
