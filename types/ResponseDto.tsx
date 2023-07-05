@@ -9,11 +9,4 @@ export type ResponseDto = {
         user_thumbnail_path: string
         user_like: boolean
     }
-    categories: [
-        {
-            category_id: number
-            category_name: string
-            category_image_path: string
-        },
-    ]
 }

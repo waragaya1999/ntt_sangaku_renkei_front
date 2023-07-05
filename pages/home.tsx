@@ -7,6 +7,7 @@ import CatList from "@/components/CatList"
 import { useLayoutEffect, useState } from "react"
 import axios from "axios"
 import { ResponseDto } from "@/types/ResponseDto"
+import { CategoriesResponseDto } from "@/types/CategoriesResponseDto"
 
 export default function Home() {
     const [doc, setDoc] = useState<ResponseDto>({
@@ -20,14 +21,8 @@ export default function Home() {
             user_thumbnail_path: "",
             user_like: false,
         },
-        categories: [
-            {
-                category_id: 0,
-                category_name: "",
-                category_image_path: "",
-            },
-        ],
     })
+    const [cat, setCat] = useState<CategoriesResponseDto[]>([])
     const [sliderRef] = useKeenSlider({
         mode: "free-snap",
         slides: {
@@ -37,10 +32,20 @@ export default function Home() {
         },
     })
     useLayoutEffect(() => {
+        //いいね上位5件くらいください
         axios
-            .get("http://localhost:8003/post/1")
+            .get("http://localhost:8003/article/1")
             .then((res) => {
                 setDoc(res.data)
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        axios
+            .get("http://localhost:8003/categories")
+            .then((res) => {
+                setCat(res.data)
                 console.log(res.data)
             })
             .catch((err) => {
@@ -98,14 +103,15 @@ export default function Home() {
                     }
                     style={{ height: "calc((100vh - 8rem) * 0.15)" }}
                 >
-                    {doc?.categories.map((item, index) => (
-                        <>{index === 1 ? <CatList mx={"ml-[5%]"} /> : <></>}</>
-                    ))}
-                    <CatList mx={"ml-[5%]"} />
-                    <CatList mx={""} />
-                    <CatList mx={""} />
-                    <CatList mx={""} />
-                    <CatList mx={"mr-[5%]"} />
+                    {cat.map((c, i) => {
+                        if (i === 0) {
+                            return <CatList cat={c} mx={"ml-[5%]"} key={i} />
+                        } else if (i === cat.length - 1) {
+                            return <CatList cat={c} mx={"mr-[5%]"} key={i} />
+                        } else {
+                            return <CatList cat={c} mx={""} key={i} />
+                        }
+                    })}
                 </div>
             </main>
             <Footer />

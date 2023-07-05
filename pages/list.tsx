@@ -9,7 +9,11 @@ export default function List() {
     const [doc, setDoc] = useState<ResponseDto[]>([])
     useLayoutEffect(() => {
         axios
-            .get("http://localhost:8003/posts")
+            .get("http://localhost:8003/articles?page=1", {
+                headers: {
+                    accept: "application/json",
+                },
+            })
             .then((res) => {
                 setDoc(res.data)
                 console.log(res.data)

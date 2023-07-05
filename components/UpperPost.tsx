@@ -35,14 +35,16 @@ export default function UpperPost({
             <div className={"w-[100%] h-[30%] flex flex-col bg-[#f1f1f1] py-3"}>
                 <div className={"w-11/12 h-[20%] flex items-center m-auto"}>
                     <div
-                        className={"w-8 h-8 bg-center bg-cover bg-no-repeat"}
+                        className={
+                            "w-8 h-8 bg-center bg-cover bg-no-repeat rounded-full mr-2"
+                        }
                         style={{
                             backgroundImage: `url(${user.user_thumbnail_path})`,
                         }}
                     ></div>
                     <p>{user.user_name}</p>
                 </div>
-                <div className={"w-[80%] h-[65%] overflow-hidden m-auto"}>
+                <div className={"w-[80%] h-[65%] overflow-hidden m-auto py-3"}>
                     <p className={"overflow-ellipsis"}>{content}</p>
                 </div>
                 <div className={"w-fit h-[15%] self-end mr-[5%]"}>
