@@ -1,5 +1,6 @@
 import axios from "axios"
 import { log } from "console"
+import { headers } from "next/dist/client/components/headers"
 import { ChangeEvent, useState } from "react"
 import { create } from "zustand"
 
@@ -91,23 +92,34 @@ const usePostArticle = create<postArticleState>((set, get) => ({
         console.log("getCategories run")
 
         try {
-            const response: categoryDto[] = await axios.get(
-                url + "/categories",
-                {
-                    headers: {
-                        accept: "application/json",
-                    },
+            const response = await axios.get(url + "/categories", {
+                headers: {
+                    accept: "application/json",
                 },
-            )
-            set({
-                categories: response,
             })
-            console.log("response: " + response[0].category_id)
+            set({
+                categories: response.data,
+            })
+            console.log("response: " + response)
         } catch (e) {
             console.log("getCategory error")
             console.log(e)
         }
+        console.log(get().categories)
     },
+    // getCategories: () => {
+    //     axios
+    //         .get(url + "/categories", {
+    //             headers: { accept: "application/json" },
+    //         })
+    //         .then((res) => {
+    //             console.log(res.data)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         })
+    // },
+
     categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => {
         set((state) => ({
             article: {
