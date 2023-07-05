@@ -3,35 +3,43 @@ import Header from "@/components/Header"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
 import useAuth from "@/components/hooks/useAuth"
+import axios from "axios"
 
 export default function Test() {
     // グーグルログイン後、ユーザIDを取得
     const { data: session } = useSession()
     const { login, user } = useAuth()
 
-    useEffect(() => {
-        login(session?.user)
-    }, [session])
-
     const {
         article,
         getImagePath,
         imagePathOnChange,
         bodyOnChange,
+        categories,
+        getCategories,
         categoriesOnChange,
         postArticle,
         resetArticle,
     } = usePostArticle()
+
+    useEffect(() => {
+        login(session?.user)
+        getCategories()
+    }, [session])
+
     return (
         <>
-            <Header location={"投稿"} />
             <main>
                 <div className="w-full max-w-xs">
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => getImagePath(e)}
-                    />
+                    <form>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => getImagePath(e)}
+                        />
+                    </form>
+                    <p>imagePath: {article.imagePath}</p>
+                    <img src={article.imagePath} />
 
                     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                         <div className="mb-4">
@@ -77,6 +85,11 @@ export default function Test() {
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 category
                             </label>
+
+                            {categories.map((category) => (
+                                <p>{category.category_name}</p>
+                            ))}
+
                             <input
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="username"
@@ -86,6 +99,7 @@ export default function Test() {
                                 onChange={(event) => categoriesOnChange(event)}
                             />
                         </div>
+
                         <div className="mb-6">
                             <p className="text-red-500 text-xs italic">
                                 Please choose a password.
