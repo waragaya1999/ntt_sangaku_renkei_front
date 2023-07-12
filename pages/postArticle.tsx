@@ -84,8 +84,8 @@ export default function Test() {
                                 category
                             </label>
 
-                            {categories.map((category) => (
-                                <p>{category.category_name}</p>
+                            {categories.map((category, key) => (
+                                <p key={key}>{category.category_name}</p>
                             ))}
 
                             <input
