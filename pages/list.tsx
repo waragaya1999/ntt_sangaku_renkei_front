@@ -30,6 +30,7 @@ export default function List() {
                     return (
                         <div key={index}>
                             <ListComponent
+                                post_id={doc?.post_id}
                                 image_path={doc?.image_path}
                                 content={doc?.content}
                                 like_count={doc?.like_count}

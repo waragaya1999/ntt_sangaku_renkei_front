@@ -1,13 +1,56 @@
 import UpperPost from "@/components/UpperPost"
+import axios from "axios"
 import React from "react"
+import useAuth from "./hooks/useAuth"
 
 type Props = Omit<React.ComponentProps<typeof UpperPost>, "num">
 export default function ListComponent({
+    post_id,
     image_path,
     content,
     like_count,
     user,
 }: Props) {
+    const { user: AuthUser } = useAuth()
+    const toggle_like = async (user_like: boolean) => {
+        const url =
+            process.env.NEXT_PUBLIC_MOCK_URL + `/article/${post_id}/like`
+
+        console.log(url)
+
+        const userData = {
+            userName: AuthUser.name,
+            email: AuthUser.email,
+            imgPath: AuthUser.image,
+        }
+        if (!user_like) {
+            try {
+                // const response = await axios.delete(url, userData)
+                const response = await axios({
+                    method: "delete",
+                    url: url,
+                    data: userData,
+                })
+                console.log("response: " + response)
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            try {
+                const response = await axios.put(url, userData)
+                // await axios.put(url, {
+                //     params: userData,
+                //     headers: {
+                //         accept: "application/json",
+                //         "Content-Type": "application/json",
+                //     },
+                // })
+                console.log("response: " + response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
     return (
         <div className={"h-fit border-t"}>
             <div className={"w-[85%] h-fit m-auto"}>
@@ -33,7 +76,12 @@ export default function ListComponent({
                         <p className={"overflow-ellipsis"}>{content}</p>
                     </div>
                     <div className={"w-fit h-fit self-end mr-[5%]"}>
-                        <p>{like_count}</p>
+                        <p className="flex">
+                            <div onClick={() => toggle_like(user.user_like)}>
+                                {user.user_like ? "❤️" : "♡"}
+                            </div>
+                            {like_count}
+                        </p>
                     </div>
                 </div>
             </div>

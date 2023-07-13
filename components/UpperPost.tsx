@@ -1,6 +1,7 @@
 import Image from "next/image"
 
 type Props = {
+    post_id: number
     num: number
     image_path: string
     content: string

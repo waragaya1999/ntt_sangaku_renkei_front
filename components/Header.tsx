@@ -1,11 +1,19 @@
 import Image from "next/image"
 import { signIn, signOut, useSession } from "next-auth/react"
+import { useEffect } from "react"
+import useAuth from "./hooks/useAuth"
 type Props = {
     location: string
 }
 
 export default function Header({ location }: Props) {
     const { data: session } = useSession()
+    const { login, user } = useAuth()
+
+    useEffect(() => {
+        login(session?.user)
+    }, [session])
+
     const imageUrl = "/images/user.svg"
     return (
         <header className={"w-full max-w-[600px] h-12 fixed bg-white z-[999]"}>
