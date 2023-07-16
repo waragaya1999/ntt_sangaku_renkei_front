@@ -1,13 +1,9 @@
 import Header from "@/components/Header"
-import UpperPost from "@/components/UpperPost"
-import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 import Footer from "@/components/Footer"
-import CatList from "@/components/CatList"
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import { ResponseDto } from "@/types/ResponseDto"
-import { CategoriesResponseDto } from "@/types/CategoriesResponseDto"
 import useAuth from "@/components/hooks/useAuth"
 
 export default function Home() {

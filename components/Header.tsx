@@ -14,6 +14,12 @@ export default function Header({ location }: Props) {
         login(session?.user)
     }, [session])
 
+    const signOutOnClick = () => {
+        if (window.confirm("サインアウトしますか？")) {
+            signOut()
+        }
+    }
+
     const imageUrl = "/images/user.svg"
     return (
         <header className={"w-full max-w-[600px] h-12 fixed bg-white z-[999]"}>
@@ -34,7 +40,7 @@ export default function Header({ location }: Props) {
                             alt="logo"
                             width={40}
                             height={40}
-                            onClick={() => signOut()}
+                            onClick={() => signOutOnClick()}
                         />
                     ) : (
                         <Image
