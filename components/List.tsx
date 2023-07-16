@@ -10,6 +10,7 @@ export default function ListComponent({
     content,
     like_count,
     user,
+    getArticles,
 }: Props) {
     const { user: AuthUser } = useAuth()
     const toggle_like = async (user_like: boolean) => {
@@ -32,6 +33,7 @@ export default function ListComponent({
                     data: userData,
                 })
                 console.log("response: " + response)
+                getArticles()
             } catch (error) {
                 console.log(error)
             }

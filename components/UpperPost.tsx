@@ -1,8 +1,11 @@
+import { ResponseDto } from "@/types/ResponseDto"
 import Image from "next/image"
+import { Dispatch, SetStateAction } from "react"
 
 type Props = {
     post_id: number
     num: number
+    getArticles: () => void //Todo ここの動作をテストできない
     image_path: string
     content: string
     like_count: number

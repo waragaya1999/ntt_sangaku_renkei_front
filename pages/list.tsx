@@ -7,7 +7,7 @@ import axios from "axios"
 
 export default function List() {
     const [doc, setDoc] = useState<ResponseDto[]>([])
-    useLayoutEffect(() => {
+    const getArticles = () => {
         axios
             .get("http://localhost:8003/articles?page=1", {
                 headers: {
@@ -21,6 +21,12 @@ export default function List() {
             .catch((err) => {
                 console.log(err)
             })
+
+        console.log("getArticles run")
+    }
+
+    useLayoutEffect(() => {
+        getArticles()
     }, [])
     return (
         <>
@@ -35,6 +41,7 @@ export default function List() {
                                 content={doc?.content}
                                 like_count={doc?.like_count}
                                 user={doc?.user}
+                                getArticles={getArticles}
                             />
                         </div>
                     )

@@ -22,7 +22,7 @@ export default function Home() {
         imgPath: user.image,
     }
 
-    const [articles, setArticles] = useState(null)
+    const [articles, setArticles] = useState<ResponseDto[]>([])
     const getArticle = async () => {
         try {
             const response = await axios.post(url, userData, {
@@ -49,13 +49,23 @@ export default function Home() {
                     src={user.image}
                     className=" w-[45%] rounded-full m-auto"
                 />
-                <div className=" pt-10">
+                <div className=" py-10">
                     <p>user name : {user.name}</p>
                     <p>email : {user.email}</p>
                 </div>
 
-                <div className="pt-12">
-                    <h2>投稿一覧</h2>
+                <div className="grid grid-cols-3 gap-4">
+                    {articles.map((article, index) => {
+                        return (
+                            <div key={index}>
+                                <img
+                                    src={article.image_path}
+                                    alt=""
+                                    className="w-full h-auto"
+                                />
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
             <Footer />
