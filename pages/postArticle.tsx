@@ -1,9 +1,7 @@
 import usePostArticle from "@/components/hooks/usePostArticle"
-import Header from "@/components/Header"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
 import useAuth from "@/components/hooks/useAuth"
-import axios from "axios"
 
 export default function Test() {
     // グーグルログイン後、ユーザIDを取得
@@ -86,8 +84,8 @@ export default function Test() {
                                 category
                             </label>
 
-                            {categories.map((category) => (
-                                <p>{category.category_name}</p>
+                            {categories.map((category, key) => (
+                                <p key={key}>{category.category_name}</p>
                             ))}
 
                             <input
