@@ -5,6 +5,7 @@ import useAuth from "@/components/hooks/useAuth"
 import axios from "axios"
 import PostArticle from "@/components/PostArticle"
 import Footer from "@/components/Footer"
+import Header from "@/components/Header"
 
 export default function Post() {
     // グーグルログイン後、ユーザIDを取得

@@ -6,8 +6,8 @@ const url = process.env.NEXT_PUBLIC_MOCK_URL || ""
 
 export type articleDto = {
     userId: number
-    imagePath: string
-    body: string
+    imgPath: string
+    content: string
     categories: number[]
 }
 
@@ -19,8 +19,8 @@ export type categoryDto = {
 
 const resetArticle: articleDto = {
     userId: 0,
-    imagePath: "",
-    body: "",
+    imgPath: "",
+    content: "",
     categories: [],
 }
 
@@ -58,7 +58,7 @@ const usePostArticle = create<postArticleState>((set, get) => ({
                 set((state) => ({
                     article: {
                         ...state.article,
-                        imagePath: response.data.imgPath,
+                        imgPath: response.data.imgPath,
                     },
                 }))
             } catch (error) {
@@ -71,7 +71,7 @@ const usePostArticle = create<postArticleState>((set, get) => ({
         set((state) => ({
             article: {
                 ...state.article,
-                imagePath: "",
+                imgPath: "",
             },
         }))
     },
@@ -80,7 +80,7 @@ const usePostArticle = create<postArticleState>((set, get) => ({
         set((state) => ({
             article: {
                 ...state.article,
-                imagePath: event.target.value,
+                imgPath: event.target.value,
             },
         }))
     },
@@ -89,9 +89,10 @@ const usePostArticle = create<postArticleState>((set, get) => ({
         set((state) => ({
             article: {
                 ...state.article,
-                body: event.target.value,
+                content: event.target.value,
             },
         }))
+        console.log(get().article.content)
     },
 
     // Todo 大変そうだからとりあえずStringでやった

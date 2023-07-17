@@ -7,7 +7,6 @@ type Props = {
 }
 
 export default function Header({ location }: Props) {
-    const { login, user } = useAuth()
     const { data: session } = useSession()
     const { login, user } = useAuth()
 

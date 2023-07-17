@@ -63,12 +63,12 @@ export default function PostArticle({
     return (
         <div className={`h-[100%] rounded-2xl overflow-hidden`}>
             <div className={"w-[100%] h-[60%] relative bg-gray-600"}>
-                {article.imagePath !== "" ? (
+                {article.imgPath !== "" ? (
                     <div
                         className={
                             "w-hull h-full bg-center bg-cover bg-no-repeat"
                         }
-                        style={{ backgroundImage: `url(${article.imagePath})` }}
+                        style={{ backgroundImage: `url(${article.imgPath})` }}
                     >
                         <img
                             src={"/images/cancel.svg"}

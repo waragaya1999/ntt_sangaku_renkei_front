@@ -3,7 +3,10 @@ import axios from "axios"
 import React from "react"
 import useAuth from "./hooks/useAuth"
 
-type Props = Omit<React.ComponentProps<typeof UpperPost>, "num">
+type Props = Omit<React.ComponentProps<typeof UpperPost>, "num"> & {
+    getArticles: () => void
+}
+
 export default function ListComponent({
     post_id,
     image_path,
@@ -20,9 +23,9 @@ export default function ListComponent({
         console.log(url)
 
         const userData = {
-            userName: AuthUser.name,
+            userName: AuthUser.user_name,
             email: AuthUser.email,
-            imgPath: AuthUser.image,
+            imgPath: AuthUser.user_thumbnail_path,
         }
         if (!user_like) {
             try {

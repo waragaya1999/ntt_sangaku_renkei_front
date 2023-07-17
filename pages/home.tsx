@@ -4,10 +4,12 @@ import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 import Footer from "@/components/Footer"
 import CatList from "@/components/CatList"
-import { useLayoutEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import axios from "axios"
 import { ResponseDto } from "@/types/ResponseDto"
 import { CategoriesResponseDto } from "@/types/CategoriesResponseDto"
+import { useSession } from "next-auth/react"
+import useAuth from "@/components/hooks/useAuth"
 
 export default function Home() {
     const [doc, setDoc] = useState<ResponseDto>({
@@ -31,10 +33,14 @@ export default function Home() {
             spacing: 15,
         },
     })
-    useLayoutEffect(() => {
+    const { data: session } = useSession()
+    const { user } = useAuth()
+
+    useEffect(() => {
+        const mockUrl = process.env.NEXT_PUBLIC_MOCK_URL
         //いいね上位5件くらいください
         axios
-            .get("http://localhost:8003/article/1")
+            .get(`${mockUrl}/articles/ranking?uid=${user?.user_id}`)
             .then((res) => {
                 setDoc(res.data)
                 console.log(res.data)
@@ -43,7 +49,7 @@ export default function Home() {
                 console.log(err)
             })
         axios
-            .get("http://localhost:8003/categories")
+            .get(`${mockUrl}/categories`)
             .then((res) => {
                 setCat(res.data)
                 console.log(res.data)
@@ -51,7 +57,8 @@ export default function Home() {
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }, [user])
+    console.log(user)
     return (
         <>
             <Header location={"ホーム"} />

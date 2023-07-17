@@ -13,9 +13,9 @@ export default function Home() {
     console.log("url: " + url)
 
     const userData = {
-        userName: user.name,
+        userName: user.user_name,
         email: user.email,
-        imgPath: user.image,
+        imgPath: user.user_thumbnail_path,
     }
 
     const [articles, setArticles] = useState<ResponseDto[]>([])
@@ -42,11 +42,11 @@ export default function Home() {
             <Header location={"マイページ"} />
             <div className="p-20 w-full ">
                 <img
-                    src={user.image}
+                    src={user.user_thumbnail_path}
                     className=" w-[45%] rounded-full m-auto"
                 />
                 <div className=" py-10">
-                    <p>user name : {user.name}</p>
+                    <p>user name : {user.user_name}</p>
                     <p>email : {user.email}</p>
                 </div>
 
