@@ -63,6 +63,7 @@ export default function Home() {
                 >
                     <UpperPost
                         num={1}
+                        post_id={doc?.post_id}
                         image_path={doc?.image_path}
                         content={doc?.content}
                         like_count={doc?.like_count}
@@ -70,6 +71,7 @@ export default function Home() {
                     />
                     <UpperPost
                         num={2}
+                        post_id={doc?.post_id}
                         image_path={doc?.image_path}
                         content={doc?.content}
                         like_count={doc?.like_count}
@@ -77,6 +79,7 @@ export default function Home() {
                     />
                     <UpperPost
                         num={3}
+                        post_id={doc?.post_id}
                         image_path={doc?.image_path}
                         content={doc?.content}
                         like_count={doc?.like_count}
@@ -84,6 +87,7 @@ export default function Home() {
                     />
                     <UpperPost
                         num={4}
+                        post_id={doc?.post_id}
                         image_path={doc?.image_path}
                         content={doc?.content}
                         like_count={doc?.like_count}
@@ -91,6 +95,7 @@ export default function Home() {
                     />
                     <UpperPost
                         num={5}
+                        post_id={doc?.post_id}
                         image_path={doc?.image_path}
                         content={doc?.content}
                         like_count={doc?.like_count}
