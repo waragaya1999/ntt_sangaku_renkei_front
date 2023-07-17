@@ -149,11 +149,16 @@ const usePostArticle = create<postArticleState>((set, get) => ({
         }))
         try {
             //Todo URL確認
-            await axios.post(url + "/article", get().article, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
+            await axios
+                .post(url + "/article", get().article, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then((res) => {
+                    alert("投稿しました")
+                    location.href = "/list"
+                })
         } catch (error) {
             console.log(error)
         }

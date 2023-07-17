@@ -62,7 +62,7 @@ export default function PostArticle({
 
     return (
         <div className={`h-[100%] rounded-2xl overflow-hidden`}>
-            <div className={"w-[100%] h-[60%] relative bg-gray-600"}>
+            <div className={"w-[100%] h-[60%] relative bg-gray-300"}>
                 {article.imgPath !== "" ? (
                     <div
                         className={
@@ -121,9 +121,10 @@ export default function PostArticle({
                                 "w-fit h-fit bg-white rounded ml-2 px-2 py-1"
                             }
                             style={{
-                                backgroundColor:
-                                    array.includes(i + 1) && "rgb(59 130 246)",
-                                color: array.includes(i + 1) && "white",
+                                backgroundColor: array.includes(i + 1)
+                                    ? "rgb(59 130 246)"
+                                    : "",
+                                color: array.includes(i + 1) ? "white" : "",
                             }}
                             onClick={() => handleClick(i + 1)}
                         >
