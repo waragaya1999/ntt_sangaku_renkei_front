@@ -1,19 +1,17 @@
 import axios from "axios"
-import { log } from "console"
-import { headers } from "next/dist/client/components/headers"
 import { ChangeEvent, useState } from "react"
 import { create } from "zustand"
 
 const url = process.env.NEXT_PUBLIC_MOCK_URL || ""
 
-type articleDto = {
+export type articleDto = {
     userId: number
     imagePath: string
     body: string
-    categories: string
+    categories: number[]
 }
 
-type categoryDto = {
+export type categoryDto = {
     category_id: number
     category_name: string
     category_image_path: string
@@ -23,17 +21,18 @@ const resetArticle: articleDto = {
     userId: 0,
     imagePath: "",
     body: "",
-    categories: "",
+    categories: [],
 }
 
 type postArticleState = {
     article: articleDto
     getImagePath: (event: ChangeEvent<HTMLInputElement>) => void
+    clearImagePath: () => void
     imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => void
-    bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => void
+    bodyOnChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
     categories: categoryDto[]
     getCategories: () => void
-    categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => void
+    categoriesOnChange: (event: number[]) => void
     postArticle: (userId: number) => void
     resetArticle: () => void
 }
@@ -42,6 +41,7 @@ const usePostArticle = create<postArticleState>((set, get) => ({
     article: resetArticle,
 
     getImagePath: async (event: ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.files)
         if (event.target.files !== null) {
             try {
                 //Todo URL確認
@@ -67,6 +67,15 @@ const usePostArticle = create<postArticleState>((set, get) => ({
         }
     },
 
+    clearImagePath: () => {
+        set((state) => ({
+            article: {
+                ...state.article,
+                imagePath: "",
+            },
+        }))
+    },
+
     imagePathOnChange: (event: ChangeEvent<HTMLInputElement>) => {
         set((state) => ({
             article: {
@@ -76,7 +85,7 @@ const usePostArticle = create<postArticleState>((set, get) => ({
         }))
     },
 
-    bodyOnChange: (event: ChangeEvent<HTMLInputElement>) => {
+    bodyOnChange: (event: ChangeEvent<HTMLTextAreaElement>) => {
         set((state) => ({
             article: {
                 ...state.article,
@@ -120,13 +129,14 @@ const usePostArticle = create<postArticleState>((set, get) => ({
     //         })
     // },
 
-    categoriesOnChange: (event: ChangeEvent<HTMLInputElement>) => {
+    categoriesOnChange: (event: number[]) => {
         set((state) => ({
             article: {
                 ...state.article,
-                categories: event.target.value,
+                categories: event,
             },
         }))
+        console.log(get().article.categories)
     },
 
     postArticle: async (userId: number) => {
@@ -138,7 +148,7 @@ const usePostArticle = create<postArticleState>((set, get) => ({
         }))
         try {
             //Todo URL確認
-            await axios.post(url + "/post", get().article, {
+            await axios.post(url + "/article", get().article, {
                 headers: {
                     "Content-Type": "application/json",
                 },
