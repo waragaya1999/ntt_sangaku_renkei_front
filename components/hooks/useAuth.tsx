@@ -1,60 +1,60 @@
-import axios from "axios";
-import { create } from "zustand";
+import axios from "axios"
+import { create } from "zustand"
 
-const url = process.env.NEXT_PUBLIC_MOCK_URL || "";
+const url = process.env.NEXT_PUBLIC_MOCK_URL || ""
 
 type userDto = {
-  userId: number;
-  name: string;
-  email: string;
-  image: string;
-};
+    user_id: number
+    user_name: string
+    user_thumbnail_path: string
+    email: string
+}
 
 const resetUser = {
-  userId: 0,
-  name: "",
-  email: "",
-  image: "",
-};
+    user_id: 0,
+    user_name: "",
+    user_thumbnail_path: "",
+    email: "",
+}
 
 type userState = {
-  user: userDto;
-  login: (user: any) => void;
-  logout: () => void;
-};
+    user: userDto
+    login: (user: any) => void
+    logout: () => void
+}
 
 const useAuth = create<userState>((set, get) => ({
-  user: resetUser,
+    user: resetUser,
 
-  login: async (user: any) => {
-    try {
-      const sendData = {
-        userName: user.name,
-        email: user.email,
-        imgPath: user.image,
-      };
+    login: async (user: any) => {
+        try {
+            const sendData = {
+                userName: user.name,
+                email: user.email,
+                imgPath: user.image,
+            }
 
-      const response = await axios.post(url + "/user", sendData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      set({
-        user: {
-          userId: response.data.userId,
-          name: user.name,
-          email: user.email,
-          image: user.image,
-        },
-      });
-    } catch {}
-  },
+            const response = await axios.post(url + "/user", sendData, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            set({
+                user: {
+                    user_id: response.data.userId,
+                    user_name: user.name,
+                    user_thumbnail_path: user.image,
+                    email: user.email,
+                },
+            })
+        } catch {}
+    },
 
-  logout: () => {
-    set({
-      user: resetUser,
-    });
-  },
-}));
+    logout: () => {
+        set({
+            user: resetUser,
+        })
+    },
+}))
 
-export default useAuth;
+export default useAuth

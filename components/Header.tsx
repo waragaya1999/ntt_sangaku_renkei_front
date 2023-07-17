@@ -7,6 +7,7 @@ type Props = {
 }
 
 export default function Header({ location }: Props) {
+    const { login, user } = useAuth()
     const { data: session } = useSession()
     const { login, user } = useAuth()
 
@@ -21,6 +22,9 @@ export default function Header({ location }: Props) {
     }
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const imageUrl = "/images/user.svg"
+    useEffect(() => {
+        login(session?.user)
+    }, [session])
     return (
         <header className={"w-full max-w-[600px] h-12 fixed bg-white z-[999]"}>
             <div className={"w-[90%] h-[100%] flex justify-between m-auto"}>
@@ -84,10 +88,11 @@ export default function Header({ location }: Props) {
                 <div className={"flex items-center"}>
                     {session ? (
                         <Image
-                            src={"/images/loggedIn.svg"}
+                            src={user.user_thumbnail_path}
                             alt="logo"
                             width={40}
                             height={40}
+                            className={"rounded-full"}
                             onClick={() => signOutOnClick()}
                         />
                     ) : (
