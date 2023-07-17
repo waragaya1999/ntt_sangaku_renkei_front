@@ -16,12 +16,8 @@ export default function Header({ location, postArticle }: Props) {
         login(session?.user)
     }, [session])
 
-    const signOutOnClick = () => {
-        if (window.confirm("サインアウトしますか？")) {
-            signOut()
-        }
-    }
     const [dropdownOpen, setDropdownOpen] = useState(false)
+    const [signOutModal, setSignOutModal] = useState(false)
     const imageUrl = "/images/user.svg"
     const removeDropdown = () => {
         setDropdownOpen(false)
@@ -120,7 +116,7 @@ export default function Header({ location, postArticle }: Props) {
                             width={40}
                             height={40}
                             className={"rounded-full"}
-                            onClick={() => signOutOnClick()}
+                            onClick={() => setSignOutModal(!signOutModal)}
                         />
                     ) : (
                         <Image
@@ -130,6 +126,24 @@ export default function Header({ location, postArticle }: Props) {
                             height={40}
                             onClick={() => signIn()}
                         />
+                    )}
+                    {signOutModal && (
+                        <div className="absolute right-4 mt-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            <div
+                                className="p-1"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="options-menu"
+                            >
+                                <p
+                                    className="block px-4 py-2 text-sm text-white hover:bg-red-400  bg-red-600 rounded-xl "
+                                    role="menuitem"
+                                    onClick={() => signOut()}
+                                >
+                                    サインアウト
+                                </p>
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>
