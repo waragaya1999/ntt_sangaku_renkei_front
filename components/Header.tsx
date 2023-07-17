@@ -130,13 +130,13 @@ export default function Header({ location, postArticle }: Props) {
                     {signOutModal && (
                         <div className="absolute right-4 mt-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                             <div
-                                className="py-1"
+                                className="p-1"
                                 role="menu"
                                 aria-orientation="vertical"
                                 aria-labelledby="options-menu"
                             >
                                 <p
-                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    className="block px-4 py-2 text-sm text-white hover:bg-red-400  bg-red-600 rounded-xl "
                                     role="menuitem"
                                     onClick={() => signOut()}
                                 >
