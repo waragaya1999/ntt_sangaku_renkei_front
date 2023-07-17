@@ -43,13 +43,6 @@ export default function ListComponent({
         } else {
             try {
                 const response = await axios.put(url, userData)
-                // await axios.put(url, {
-                //     params: userData,
-                //     headers: {
-                //         accept: "application/json",
-                //         "Content-Type": "application/json",
-                //     },
-                // })
                 console.log("response: " + response.data)
             } catch (error) {
                 console.log(error)
@@ -68,7 +61,7 @@ export default function ListComponent({
                 <div className={"w-[100%] h-fit flex flex-col py-3"}>
                     <div className={"h-[20%] flex items-center"}>
                         <div
-                            className={`w-8 h-8 bg-center bg-cover bg-no-repeat`}
+                            className={`w-8 h-8 bg-center bg-cover bg-no-repeat rounded-full mr-2`}
                             style={{
                                 backgroundImage: `url(${user.user_thumbnail_path})`,
                             }}

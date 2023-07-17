@@ -30,7 +30,7 @@ export default function List() {
     }, [])
     return (
         <>
-            <Header location={"投稿"} />
+            <Header location={"投稿一覧"} />
             <main className={"py-16 overflow-scroll hidden-scrollbar bg-white"}>
                 {doc.map((doc, index) => {
                     return (

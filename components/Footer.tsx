@@ -49,17 +49,19 @@ export default function Footer() {
                         />
                     </div>
                 </Link>
-                <div
-                    className={
-                        "w-10 h-10 flex items-center justify-center bg-[#d9d9d9] rounded"
-                    }
-                >
-                    <img
-                        src={"/images/myPage.svg"}
-                        alt="home"
-                        className={"w-[80%] opacity-50"}
-                    />
-                </div>
+                <Link href={"/myPage"}>
+                    <div
+                        className={
+                            "w-10 h-10 flex items-center justify-center bg-[#d9d9d9] rounded"
+                        }
+                    >
+                        <img
+                            src={"/images/myPage.svg"}
+                            alt="home"
+                            className={"w-[80%] opacity-50"}
+                        />
+                    </div>
+                </Link>
             </div>
         </footer>
     )

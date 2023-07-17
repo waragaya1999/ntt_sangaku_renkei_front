@@ -118,12 +118,12 @@ export default function PostArticle({
                         <div
                             key={i}
                             className={
-                                "w-fit h-fit bg-amber-200 rounded ml-2 px-2 py-1"
+                                "w-fit h-fit bg-white rounded ml-2 px-2 py-1"
                             }
                             style={{
-                                backgroundColor: array.includes(i + 1)
-                                    ? "yellow"
-                                    : "transparent",
+                                backgroundColor:
+                                    array.includes(i + 1) && "rgb(59 130 246)",
+                                color: array.includes(i + 1) && "white",
                             }}
                             onClick={() => handleClick(i + 1)}
                         >
